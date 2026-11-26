@@ -1,0 +1,446 @@
+<meta name="dash-one-writer">
+<meta name="dash-form" content="dashboard">
+<style>
+.pb{display:flex;flex-direction:column;gap:var(--cds-gap-xl);font-family:var(--font-anthropic-sans);color:var(--color-fg)}
+.pb-head h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0;text-wrap:balance}
+.pb-lede{font-size:var(--cds-font-size-body);margin:var(--cds-gap-sm) 0 0;max-width:68ch;line-height:1.6}
+.pb-lede b{font-variant-numeric:tabular-nums}
+.pb-meta{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);margin:var(--cds-gap-xs) 0 0}
+.pb-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--cds-gap-md)}
+.pb-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);min-width:0}
+.pb-tile-label{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.pb-tile-val{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);font-variant-numeric:tabular-nums;margin-top:var(--cds-gap-xs);line-height:1.1}
+.pb-tile-val small{font-family:var(--font-anthropic-sans);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-left:4px}
+.pb-tile-sub{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-top:var(--cds-gap-xs);font-variant-numeric:tabular-nums}
+.pb-controls{display:flex;flex-wrap:wrap;align-items:center;gap:var(--cds-gap-md)}
+.pb-controls label{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.pb-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.pb-sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.pb-sec{display:flex;flex-direction:column;gap:var(--cds-gap-sm);min-width:0}
+.pb-sec h2{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0;text-wrap:balance}
+.pb-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0;max-width:72ch}
+.pb-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:var(--cds-gap-xl)}
+.pb-chart{position:relative;min-height:300px;min-width:0}
+.pb-chart svg{display:block;width:100%;height:auto}
+.pb-chart .pb-ax{font-size:var(--cds-font-size-caption);fill:var(--cds-text-secondary)}
+.pb-chart .pb-val{font-size:10px;fill:var(--cds-text-secondary);font-variant-numeric:tabular-nums}
+.pb-tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);border-radius:6px;padding:6px 8px;font-size:12px;line-height:1.45;color:var(--color-fg);white-space:nowrap;z-index:5}
+.pb-tip span{color:var(--cds-text-secondary)}
+.pb-fail{color:var(--color-bad);font-size:var(--cds-font-size-caption);padding:var(--cds-pad-md) 0}
+.pb-tablewrap{overflow-x:auto}
+.pb-table{border-collapse:collapse;width:100%;font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums}
+.pb-table th,.pb-table td{padding:6px 8px;border-bottom:1px solid var(--color-border-line);text-align:right;white-space:nowrap}
+.pb-table th{color:var(--color-fg-muted);font-weight:var(--cds-font-weight-medium)}
+.pb-table th:nth-child(-n+3),.pb-table td:nth-child(-n+3){text-align:left}
+.pb-foot summary{cursor:pointer;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.pb-foot ul{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.6;padding-left:1.2em;max-width:72ch}
+</style>
+
+<div class="pb">
+  <header class="pb-head" id="overview">
+    <h1>Pi 통신 벤치마크</h1>
+    <p class="pb-lede" data-read lang="ko">유선(eth0) 직결에서 TCP 16B 메시지 왕복은 중앙값 <b data-draw="lede-cable" data-source="agg" data-field="median_mean" data-where="key=cable|tcp|16">—</b> ms로, Wi-Fi의 <b data-draw="lede-wifi" data-source="agg" data-field="median_mean" data-where="key=wifi|tcp|16">—</b> ms보다 <b data-draw="lede-x" data-source="speedup" data-field="ratio" data-where="key=tcp|16">—</b>배 빠르다. 방식·크기 24개 조합 전체로는 유선이 <b data-draw="sum-min" data-source="summary" data-field="min_ratio" data-row="0">—</b>~<b data-draw="sum-max" data-source="summary" data-field="max_ratio" data-row="0">—</b>배 빠르고, 손실은 어느 경로에서도 없었다.</p>
+    <p class="pb-meta">rpi-syw3480(192.168.20.22, 송신) → rpi-lyb3550(192.168.20.10, 에코·MQTT 브로커) · 2026-11-26 측정 · 경로별 <span data-draw="rounds" data-source="agg" data-field="rounds" data-row="0">—</span>회 반복 평균</p>
+  </header>
+
+  <div class="pb-tiles" id="tiles">
+    <div class="pb-card" id="tile-tcp">
+      <div class="pb-tile-label">유선 TCP 대역폭 (iperf3, 22→10)</div>
+      <div class="pb-tile-val"><span data-draw="iperf-tcp" data-source="iperf" data-field="mbps" data-where="test=tcp_22_to_10">—</span><small>Mbps</small></div>
+      <div class="pb-tile-sub">역방향 <span data-draw="iperf-rev" data-source="iperf" data-field="mbps" data-where="test=tcp_10_to_22">—</span> · 양방향 동시 각 <span data-draw="iperf-bidir" data-source="iperf" data-field="mbps" data-where="test=tcp_bidir_each">—</span> Mbps · 1GbE 실효 최대치</div>
+    </div>
+    <div class="pb-card" id="tile-udp">
+      <div class="pb-tile-label">유선 UDP (1000 Mbps 목표)</div>
+      <div class="pb-tile-val"><span data-draw="iperf-udp" data-source="iperf" data-field="mbps" data-where="test=udp_1000m">—</span><small>Mbps</small></div>
+      <div class="pb-tile-sub">손실 <span data-draw="iperf-udp-loss" data-source="iperf" data-field="loss_pct" data-where="test=udp_1000m">—</span>% · 지터 <span data-draw="iperf-udp-jit" data-source="iperf" data-field="jitter_ms" data-where="test=udp_1000m">—</span> ms</div>
+    </div>
+    <div class="pb-card" id="tile-fusion">
+      <div class="pb-tile-label">카메라 통합 RGB-IR 짝 시각차 |dt|</div>
+      <div class="pb-tile-val"><span data-draw="fus-cable" data-source="fusion" data-field="dt_ms" data-where="route=cable">—</span><small>ms (유선)</small></div>
+      <div class="pb-tile-sub">Wi-Fi <span data-draw="fus-wifi" data-source="fusion" data-field="dt_ms" data-where="route=wifi">—</span> ms · 가짜 영상 10 fps</div>
+    </div>
+    <div class="pb-card" id="tile-loss">
+      <div class="pb-tile-label">벤치마크 최대 손실률</div>
+      <div class="pb-tile-val"><span data-draw="loss" data-source="summary" data-field="max_loss" data-row="0">—</span><small>%</small></div>
+      <div class="pb-tile-sub">6개 방식 × 4개 크기 × 2개 경로, 매 조합 왕복 500회</div>
+    </div>
+  </div>
+
+  <div class="pb-controls" id="controls">
+    <label for="size-select">메시지 크기</label>
+    <select class="dash-select" id="size-select" aria-label="메시지 크기">
+      <option value="16">16B</option>
+      <option value="256">256B</option>
+      <option value="1024">1KB</option>
+      <option value="8192">8KB</option>
+    </select>
+    <div class="pb-legend"><span><i class="pb-sw pb-sw-wifi"></i>Wi-Fi (192.168.20.x)</span><span><i class="pb-sw pb-sw-cable"></i>유선 eth0 (10.10.10.x)</span></div>
+  </div>
+
+  <div class="pb-grid2">
+    <section class="pb-sec" id="rtt">
+      <h2>방식별 왕복 지연</h2>
+      <p class="pb-note">중앙값, 로그 축. 막대는 회차 평균, 가는 선은 회차 최소~최대. 낮을수록 좋다.</p>
+      <div class="pb-chart" data-draw="rtt" data-source="agg"></div>
+    </section>
+    <section class="pb-sec" id="tput">
+      <h2>방식별 처리량</h2>
+      <p class="pb-note">초당 메시지 수(Msg/s), 로그 축. 한 번에 한 요청씩 보내고 응답을 기다리는 방식. 높을수록 좋다.</p>
+      <div class="pb-chart" data-draw="tput" data-source="agg"></div>
+    </section>
+  </div>
+
+  <section class="pb-sec" id="speedup">
+    <h2>유선이 Wi-Fi보다 몇 배 빠른가</h2>
+    <p class="pb-note">Wi-Fi 중앙값 지연 ÷ 유선 중앙값 지연. 진할수록 차이가 크다. Wi-Fi는 큰 메시지(8KB)에서 특히 느려진다.</p>
+    <div class="pb-chart" data-draw="heat" data-source="speedup"></div>
+  </section>
+
+  <section class="pb-sec" id="tail">
+    <h2>지연 꼬리: 중앙값, p95, p99</h2>
+    <p class="pb-note">p99는 100번 중 가장 느린 1번 수준. 선이 길수록 지연이 들쭉날쭉하다. 두 경로는 축 범위가 다르다.</p>
+    <div class="pb-chart" data-draw="tail" data-source="agg"></div>
+  </section>
+
+  <section class="pb-sec" id="table">
+    <h2>전체 결과</h2>
+    <div class="pb-tablewrap">
+      <table class="pb-table" data-source="agg" data-row-key="key">
+        <thead><tr>
+          <th data-field="route">경로</th><th data-field="method">방식</th><th data-field="size_bytes">크기(B)</th>
+          <th data-field="median_mean">중앙값 ms</th><th data-field="p95_mean">p95 ms</th><th data-field="p99_mean">p99 ms</th><th data-field="max_ms">최대 ms</th>
+          <th data-field="tput_mean">Msg/s</th><th data-field="loss_max">손실 %</th><th data-field="rounds">회차</th>
+        </tr></thead>
+        <tbody data-draw="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <details class="pb-foot" id="method">
+    <summary>측정 방법과 주의할 점</summary>
+    <ul data-read lang="ko">
+      <li>22번이 메시지를 보내고 10번이 그대로 돌려준 왕복 시간을 22번 시계 하나로 잰다. 두 Pi의 시계 차이는 영향을 주지 않는다.</li>
+      <li>TCP는 연결 재사용과 TCP_NODELAY, UDP는 시퀀스 번호, HTTP는 keep-alive와 요청마다 새 연결, MQTT는 10번의 mosquitto 브로커를 거친다.</li>
+      <li>조합마다 예열 20회, 왕복 500회, 처리량 5초, 타임아웃 1초. Wi-Fi와 유선을 번갈아 같은 순서로 반복했다.</li>
+      <li>유선은 양쪽 eth0을 랜선으로 직결하고 10.10.10.0/24 고정 IP를 줬다. 링크는 1000 Mbps 전이중이다.</li>
+      <li>카메라 통합 수치는 실제 카메라가 아닌 가짜 영상으로 30초씩 잰 것이다.</li>
+    </ul>
+  </details>
+</div>
+
+<script>
+(function () {
+  const METHODS = ['tcp', 'udp', 'mqtt-qos0', 'mqtt-qos1', 'http-keepalive', 'http-new'];
+  const SIZES = [16, 256, 1024, 8192];
+  const SZ = {16: '16B', 256: '256B', 1024: '1KB', 8192: '8KB'};
+  const ROUTE_NAME = {wifi: 'Wi-Fi', cable: '유선'};
+  const r3 = (v) => Math.round(v * 1000) / 1000;
+  window.pbState = {size: 16};
+  window.pbConst = {METHODS, SIZES, SZ, ROUTE_NAME};
+
+  dash.calc('agg', {
+    inputs: ['bench'],
+    title: '경로·방식·크기별 회차 평균',
+    description: '측정 회차들의 평균, 최소, 최대',
+    fn: (bench) => {
+      const groups = new Map();
+      for (const r of bench) {
+        const k = r.route + '|' + r.method + '|' + r.size_bytes;
+        if (!groups.has(k)) groups.set(k, []);
+        groups.get(k).push(r);
+      }
+      const mean = (a) => a.reduce((s, v) => s + v, 0) / a.length;
+      const out = [];
+      for (const [key, rs] of groups) {
+        const col = (f) => rs.map((r) => Number(r[f]));
+        out.push({
+          key, route: rs[0].route, method: rs[0].method, size_bytes: Number(rs[0].size_bytes), rounds: rs.length,
+          median_mean: r3(mean(col('median_ms'))), median_min: r3(Math.min(...col('median_ms'))), median_max: r3(Math.max(...col('median_ms'))),
+          p95_mean: r3(mean(col('p95_ms'))), p99_mean: r3(mean(col('p99_ms'))), max_ms: r3(Math.max(...col('max_ms'))),
+          tput_mean: Math.round(mean(col('throughput_msg_s')) * 10) / 10,
+          tput_min: Math.min(...col('throughput_msg_s')), tput_max: Math.max(...col('throughput_msg_s')),
+          loss_max: Math.max(...col('rtt_loss_pct'), ...col('throughput_loss_pct')),
+        });
+      }
+      return out;
+    },
+  });
+
+  dash.calc('speedup', {
+    inputs: ['agg'],
+    title: '유선 대비 Wi-Fi 지연 배수',
+    description: 'Wi-Fi 중앙값 지연을 유선 중앙값 지연으로 나눈 값',
+    fn: (agg) => {
+      const byKey = new Map(agg.map((r) => [r.key, r]));
+      const out = [];
+      for (const m of METHODS) for (const s of SIZES) {
+        const w = byKey.get('wifi|' + m + '|' + s), c = byKey.get('cable|' + m + '|' + s);
+        if (w && c) out.push({key: m + '|' + s, method: m, size_bytes: s, ratio: Math.round((w.median_mean / c.median_mean) * 10) / 10});
+      }
+      return out;
+    },
+  });
+
+  dash.calc('summary', {
+    inputs: ['speedup', 'agg'],
+    title: '배수 범위와 최대 손실',
+    description: '24개 조합 중 가장 작은 배수와 가장 큰 배수, 모든 측정의 최대 손실률',
+    fn: (speedup, agg) => [{
+      min_ratio: Math.round(Math.min(...speedup.map((r) => r.ratio))),
+      max_ratio: Math.round(Math.max(...speedup.map((r) => r.ratio))),
+      max_loss: Math.max(...agg.map((r) => r.loss_max)),
+    }],
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const {METHODS, SIZES, SZ, ROUTE_NAME} = window.pbConst;
+  const fmt2 = d3.format(',.2f'), fmt0 = d3.format(',.0f');
+  const fmtMs = (v) => (v < 10 ? fmt2(v) : d3.format(',.1f')(v));
+
+  const find = (id, pred) => {
+    const d = dash.data(id);
+    return d.status === 'ok' ? d.data.find(pred) : undefined;
+  };
+  const textDraw = (name, id, pred, field, f) => dash.draw(name, (el) => {
+    const r = find(id, pred);
+    el.textContent = r && r[field] != null ? f(Number(r[field])) : '—';
+  });
+
+  textDraw('lede-cable', 'agg', (r) => r.key === 'cable|tcp|16', 'median_mean', fmt2);
+  textDraw('lede-wifi', 'agg', (r) => r.key === 'wifi|tcp|16', 'median_mean', fmt2);
+  textDraw('lede-x', 'speedup', (r) => r.key === 'tcp|16', 'ratio', d3.format('.1f'));
+  textDraw('sum-min', 'summary', () => true, 'min_ratio', fmt0);
+  textDraw('sum-max', 'summary', () => true, 'max_ratio', fmt0);
+  textDraw('loss', 'summary', () => true, 'max_loss', d3.format('.1f'));
+  textDraw('rounds', 'agg', () => true, 'rounds', fmt0);
+  textDraw('iperf-tcp', 'iperf', (r) => r.test === 'tcp_22_to_10', 'mbps', fmt0);
+  textDraw('iperf-rev', 'iperf', (r) => r.test === 'tcp_10_to_22', 'mbps', fmt0);
+  textDraw('iperf-bidir', 'iperf', (r) => r.test === 'tcp_bidir_each', 'mbps', fmt0);
+  textDraw('iperf-udp', 'iperf', (r) => r.test === 'udp_1000m', 'mbps', fmt0);
+  textDraw('iperf-udp-loss', 'iperf', (r) => r.test === 'udp_1000m', 'loss_pct', d3.format('.1f'));
+  textDraw('iperf-udp-jit', 'iperf', (r) => r.test === 'udp_1000m', 'jitter_ms', d3.format('.3f'));
+  textDraw('fus-cable', 'fusion', (r) => r.route === 'cable', 'dt_ms', fmt0);
+  textDraw('fus-wifi', 'fusion', (r) => r.route === 'wifi', 'dt_ms', fmt0);
+
+  // 크기 선택: 듣기만 하고, 차트는 다시 그리게 한다
+  document.querySelectorAll('#size-select').forEach((sel) => {
+    sel.value = String(window.pbState.size);
+    sel.addEventListener('change', () => {
+      window.pbState.size = Number(sel.value);
+      ['rtt', 'tput', 'tail'].forEach((n) => dash.draw(n));
+    });
+  });
+
+  const colorOf = (route) => (route === 'wifi' ? dash.colors[0] : dash.colors[1]);
+  document.querySelectorAll('.pb-sw-wifi').forEach((e) => { e.style.background = colorOf('wifi'); });
+  document.querySelectorAll('.pb-sw-cable').forEach((e) => { e.style.background = colorOf('cable'); });
+
+  function placeholder(el, d) {
+    el.replaceChildren();
+    if (d.status === 'error') {
+      const p = document.createElement('div');
+      p.className = 'pb-fail';
+      p.textContent = '이 차트의 데이터를 불러오지 못했습니다.';
+      el.append(p);
+    } else {
+      el.textContent = '—';
+    }
+  }
+
+  function makeTip(el) {
+    const tip = document.createElement('div');
+    tip.className = 'pb-tip';
+    tip.hidden = true;
+    el.append(tip);
+    return {
+      show(ev, lines) {
+        tip.replaceChildren();
+        lines.forEach(([label, value], i) => {
+          const row = document.createElement('div');
+          if (i === 0) { row.textContent = label; row.style.fontWeight = '600'; }
+          else { const s = document.createElement('span'); s.textContent = label + ' '; row.append(s, document.createTextNode(value)); }
+          tip.append(row);
+        });
+        tip.hidden = false;
+        const [px, py] = d3.pointer(ev, el);
+        const w = tip.offsetWidth, h = tip.offsetHeight;
+        tip.style.left = Math.max(0, Math.min(el.clientWidth - w, px - w / 2)) + 'px';
+        tip.style.top = Math.max(0, py - h - 12) + 'px';
+      },
+      hide() { tip.hidden = true; },
+    };
+  }
+
+  const niceLogTicks = (y) => y.ticks().filter((t) => ['1', '2', '5'].includes(t.toExponential()[0]));
+  const plain = (v) => d3.format(',')(+v.toPrecision(3));
+
+  function groupedBar(el, cfg) {
+    const d = dash.data('agg');
+    if (d.status !== 'ok') return placeholder(el, d);
+    const size = window.pbState.size;
+    const rows = d.data.filter((r) => r.size_bytes === size);
+    el.replaceChildren();
+    const W = Math.max(280, el.clientWidth);
+    const narrow = W < 520;
+    const m = {t: 22, r: 6, b: narrow ? 74 : 34, l: 46};
+    const H = 320;
+    const x0 = d3.scaleBand(METHODS, [m.l, W - m.r]).paddingInner(0.22).paddingOuter(0.08);
+    const x1 = d3.scaleBand(['wifi', 'cable'], [0, x0.bandwidth()]).padding(0.06);
+    const vals = rows.flatMap((r) => [r[cfg.lo], r[cfg.hi]]).filter((v) => v > 0);
+    const y = d3.scaleLog([d3.min(vals) / 1.6, d3.max(vals) * 1.8], [H - m.b, m.t]);
+    const svg = d3.create('svg').attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', `${cfg.label}, ${SZ[size]} 메시지, Wi-Fi와 유선 비교`);
+    svg.append('g').selectAll('line').data(niceLogTicks(y)).join('line')
+      .attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y)
+      .style('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(niceLogTicks(y)).join('text').attr('class', 'pb-ax')
+      .attr('x', m.l - 6).attr('y', y).attr('dy', '0.32em').attr('text-anchor', 'end').text(plain);
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', H - m.b).attr('y2', H - m.b)
+      .style('stroke', 'var(--cds-chart-axis)');
+    const xl = svg.append('g').selectAll('text').data(METHODS).join('text').attr('class', 'pb-ax')
+      .text((k) => k);
+    if (narrow) xl.attr('transform', (k) => `translate(${x0(k) + x0.bandwidth() / 2},${H - m.b + 10}) rotate(-40)`).attr('text-anchor', 'end').attr('dy', '0.7em');
+    else xl.attr('x', (k) => x0(k) + x0.bandwidth() / 2).attr('y', H - m.b + 18).attr('text-anchor', 'middle');
+
+    const tip = makeTip(el);
+    const g = svg.append('g');
+    const showLabels = x1.bandwidth() >= 26;
+    for (const r of rows) {
+      if (!x0(r.method)) continue;
+      const bx = x0(r.method) + x1(r.route), bw = x1.bandwidth(), cx = bx + bw / 2;
+      const v = r[cfg.field], yv = y(v);
+      g.append('rect').attr('x', bx).attr('width', bw).attr('y', yv).attr('height', Math.max(0, H - m.b - yv))
+        .attr('rx', 2).style('fill', colorOf(r.route));
+      if (r.rounds > 1) {
+        g.append('line').attr('x1', cx).attr('x2', cx).attr('y1', y(r[cfg.lo])).attr('y2', y(r[cfg.hi]))
+          .style('stroke', 'var(--color-fg)').style('stroke-width', 1.2).style('opacity', 0.65);
+      }
+      if (showLabels) {
+        g.append('text').attr('class', 'pb-val').attr('x', cx).attr('y', y(Math.max(v, r[cfg.hi])) - 4)
+          .attr('text-anchor', 'middle').text(cfg.fmt(v));
+      }
+      g.append('rect').attr('x', bx - 2).attr('width', bw + 4).attr('y', m.t).attr('height', H - m.b - m.t)
+        .style('fill', 'transparent')
+        .on('pointermove', (ev) => tip.show(ev, [
+          [`${ROUTE_NAME[r.route]} · ${r.method} · ${SZ[size]}`],
+          [cfg.short, cfg.fmt(v) + ' ' + cfg.unit],
+          ['회차 범위', cfg.fmt(r[cfg.lo]) + ' ~ ' + cfg.fmt(r[cfg.hi]) + ' (' + r.rounds + '회)'],
+        ]))
+        .on('pointerleave', () => tip.hide());
+    }
+    el.prepend(svg.node());
+  }
+
+  dash.draw('rtt', (el) => groupedBar(el, {field: 'median_mean', lo: 'median_min', hi: 'median_max', fmt: fmtMs, unit: 'ms', label: '중앙값 왕복 지연', short: '중앙값 지연'}));
+  dash.draw('tput', (el) => groupedBar(el, {field: 'tput_mean', lo: 'tput_min', hi: 'tput_max', fmt: fmt0, unit: 'Msg/s', label: '초당 메시지 처리량', short: '처리량'}));
+
+  dash.draw('heat', (el) => {
+    const d = dash.data('speedup');
+    if (d.status !== 'ok') return placeholder(el, d);
+    el.replaceChildren();
+    const W = Math.max(280, el.clientWidth);
+    const m = {t: 26, r: 6, b: 6, l: 112};
+    const H = m.t + METHODS.length * 40 + m.b;
+    const x = d3.scaleBand(SIZES, [m.l, W - m.r]).padding(0.04);
+    const y = d3.scaleBand(METHODS, [m.t, H - m.b]).padding(0.06);
+    const ext = d3.extent(d.data, (r) => r.ratio);
+    const t = d3.scaleLog(ext, [0.18, 0.92]);
+    const svg = d3.create('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img')
+      .attr('aria-label', 'Wi-Fi 지연을 유선 지연으로 나눈 배수, 방식과 메시지 크기별');
+    svg.append('g').selectAll('text').data(SIZES).join('text').attr('class', 'pb-ax')
+      .attr('x', (s) => x(s) + x.bandwidth() / 2).attr('y', m.t - 9).attr('text-anchor', 'middle').text((s) => SZ[s]);
+    svg.append('g').selectAll('text').data(METHODS).join('text').attr('class', 'pb-ax')
+      .attr('x', m.l - 8).attr('y', (k) => y(k) + y.bandwidth() / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text((k) => k);
+    const tip = makeTip(el);
+    const cells = svg.append('g').selectAll('g').data(d.data).join('g');
+    cells.append('rect').attr('x', (r) => x(r.size_bytes)).attr('y', (r) => y(r.method))
+      .attr('width', x.bandwidth()).attr('height', y.bandwidth()).attr('rx', 3)
+      .style('fill', (r) => d3.interpolateBlues(t(r.ratio)))
+      .on('pointermove', (ev, r) => tip.show(ev, [[`${r.method} · ${SZ[r.size_bytes]}`], ['유선이', r.ratio + '배 빠름']]))
+      .on('pointerleave', () => tip.hide());
+    cells.append('text').attr('x', (r) => x(r.size_bytes) + x.bandwidth() / 2).attr('y', (r) => y(r.method) + y.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'middle').style('pointer-events', 'none')
+      .style('font-size', '13px').style('font-variant-numeric', 'tabular-nums')
+      .style('fill', (r) => (t(r.ratio) > 0.6 ? '#ffffff' : '#0b0b0b'))
+      .text((r) => d3.format('.0f')(r.ratio) + '×');
+    el.prepend(svg.node());
+  });
+
+  dash.draw('tail', (el) => {
+    const d = dash.data('agg');
+    if (d.status !== 'ok') return placeholder(el, d);
+    el.replaceChildren();
+    const size = window.pbState.size;
+    const Wfull = Math.max(280, el.clientWidth);
+    const stack = Wfull < 680;
+    const gap = 32;
+    const PW = stack ? Wfull : (Wfull - gap) / 2;
+    const m = {t: 28, r: 40, b: 30, l: 108};
+    const PH = m.t + METHODS.length * 32 + m.b;
+    const H = stack ? PH * 2 + 12 : PH;
+    const svg = d3.create('svg').attr('viewBox', `0 0 ${Wfull} ${H}`).attr('role', 'img')
+      .attr('aria-label', `방식별 중앙값, p95, p99 지연, ${SZ[size]} 메시지, Wi-Fi와 유선 각각`);
+    const tip = makeTip(el);
+    ['wifi', 'cable'].forEach((route, i) => {
+      const ox = stack ? 0 : i * (PW + gap), oy = stack ? i * (PH + 12) : 0;
+      const rows = d.data.filter((r) => r.route === route && r.size_bytes === size);
+      const g = svg.append('g').attr('transform', `translate(${ox},${oy})`);
+      const x = d3.scaleLinear([0, d3.max(rows, (r) => r.p99_mean) * 1.08], [m.l, PW - m.r]).nice(5);
+      const y = d3.scalePoint(METHODS, [m.t + 12, PH - m.b - 8]);
+      g.append('text').attr('x', 0).attr('y', 14).style('font-size', '13px').style('font-weight', 600)
+        .style('fill', 'var(--color-fg)').text(ROUTE_NAME[route] + ' (ms)');
+      g.append('g').selectAll('line').data(x.ticks(5)).join('line')
+        .attr('x1', x).attr('x2', x).attr('y1', m.t).attr('y2', PH - m.b).style('stroke', 'var(--cds-chart-grid)');
+      g.append('g').selectAll('text').data(x.ticks(5)).join('text').attr('class', 'pb-ax')
+        .attr('x', x).attr('y', PH - m.b + 16).attr('text-anchor', 'middle').text(plain);
+      g.append('g').selectAll('text').data(METHODS).join('text').attr('class', 'pb-ax')
+        .attr('x', m.l - 10).attr('y', y).attr('dy', '0.32em').attr('text-anchor', 'end').text((k) => k);
+      const c = colorOf(route);
+      for (const r of rows) {
+        const yy = y(r.method);
+        if (yy == null) continue;
+        g.append('line').attr('x1', x(r.median_mean)).attr('x2', x(r.p99_mean)).attr('y1', yy).attr('y2', yy)
+          .style('stroke', c).style('stroke-width', 2).style('opacity', 0.45);
+        g.append('circle').attr('cx', x(r.median_mean)).attr('cy', yy).attr('r', 5).style('fill', c);
+        g.append('circle').attr('cx', x(r.p95_mean)).attr('cy', yy).attr('r', 4.5)
+          .style('fill', 'var(--color-bg)').style('stroke', c).style('stroke-width', 2);
+        g.append('path').attr('d', d3.symbol(d3.symbolDiamond, 64)()).attr('transform', `translate(${x(r.p99_mean)},${yy})`)
+          .style('fill', 'var(--color-fg)').style('opacity', 0.75);
+        g.append('text').attr('class', 'pb-val').attr('x', x(r.p99_mean) + 8).attr('y', yy).attr('dy', '0.32em').text(fmtMs(r.p99_mean));
+        g.append('rect').attr('x', m.l).attr('width', PW - m.l - m.r + 30).attr('y', yy - 14).attr('height', 28)
+          .style('fill', 'transparent')
+          .on('pointermove', (ev) => tip.show(ev, [
+            [`${ROUTE_NAME[route]} · ${r.method} · ${SZ[size]}`],
+            ['중앙값', fmtMs(r.median_mean) + ' ms'], ['p95', fmtMs(r.p95_mean) + ' ms'], ['p99', fmtMs(r.p99_mean) + ' ms'], ['최대', fmtMs(r.max_ms) + ' ms'],
+          ]))
+          .on('pointerleave', () => tip.hide());
+      }
+    });
+    const lg = svg.append('g').attr('transform', `translate(${Wfull - 190},10)`);
+    lg.append('circle').attr('cx', 0).attr('cy', 0).attr('r', 4.5).style('fill', 'var(--color-fg-muted)');
+    lg.append('text').attr('class', 'pb-ax').attr('x', 8).attr('dy', '0.32em').text('중앙값');
+    lg.append('circle').attr('cx', 62).attr('cy', 0).attr('r', 4).style('fill', 'var(--color-bg)').style('stroke', 'var(--color-fg-muted)').style('stroke-width', 2);
+    lg.append('text').attr('class', 'pb-ax').attr('x', 70).attr('dy', '0.32em').text('p95');
+    lg.append('path').attr('d', d3.symbol(d3.symbolDiamond, 50)()).attr('transform', 'translate(112,0)').style('fill', 'var(--color-fg)').style('opacity', 0.75);
+    lg.append('text').attr('class', 'pb-ax').attr('x', 120).attr('dy', '0.32em').text('p99');
+    el.prepend(svg.node());
+  });
+
+  dash.draw('tbody', (tb) => {
+    const d = dash.data('agg');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const order = (r) => (r.route === 'wifi' ? 0 : 1) * 1000 + METHODS.indexOf(r.method) * 10 + SIZES.indexOf(r.size_bytes);
+    for (const r of [...d.data].sort((a, b) => order(a) - order(b))) {
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-key', r.key);
+      const cells = [ROUTE_NAME[r.route], r.method, fmt0(r.size_bytes), fmtMs(r.median_mean), fmtMs(r.p95_mean), fmtMs(r.p99_mean), fmtMs(r.max_ms), fmt0(r.tput_mean), d3.format('.1f')(r.loss_max), r.rounds];
+      for (const c of cells) { const td = document.createElement('td'); td.textContent = c; tr.append(td); }
+      tb.append(tr);
+    }
+  });
+})();
+</script>

@@ -1,0 +1,15 @@
+# 개인 작업 기록 (AI 로그, 콘솔 출력, 초안)
+research/
+
+# 압축본은 저장소 대신 따로 전달
+*.zip
+
+# 노트북에서 돌린 예전 시험 결과 (Pi 측정 아님)
+comm_bench/results/bench_20261125_*.csv
+
+# 파이썬 캐시
+__pycache__/
+*.pyc
+
+# 대시보드 업로드용 임시 파일
+comm_bench/dashboard/*.json

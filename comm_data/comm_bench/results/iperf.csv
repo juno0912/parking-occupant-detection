@@ -1,0 +1,5 @@
+test,mbps,retrans,loss_pct,jitter_ms
+tcp_22_to_10,941,0,,
+tcp_10_to_22,942,0,,
+tcp_bidir_each,939,0,,
+udp_1000m,952,,0,0.013

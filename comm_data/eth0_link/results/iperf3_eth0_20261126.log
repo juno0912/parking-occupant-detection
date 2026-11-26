@@ -1,0 +1,202 @@
+﻿Started 2026-11-26T14:37:46.1938420+09:00
+host=rpi-lyb3550 time=2026-11-26T14:37:47+09:00
+eth0             UP             10.10.10.10/24 
+eth0 speed=1000 Mbps duplex=full mtu=1500
+10.10.10.22 from 10.10.10.10 dev eth0 uid 1000 
+    cache 
+iperf 3.18 (cJSON 1.7.15)
+Linux rpi-lyb3550 6.18.50+rpt-rpi-v8 #1 SMP PREEMPT Debian 1:6.18.50-1+rpt1 (2026-09-11) aarch64
+Optional features available: CPU affinity setting, IPv6 flow label, SCTP, TCP congestion algorithm setting, sendfile / zerocopy, socket pacing, authentication, bind to device, support IPv4 don't fragment, POSIX threads
+--- ping 10.10.10.10 to 10.10.10.22 ---
+PING 10.10.10.22 (10.10.10.22) from 10.10.10.10 : 56(84) bytes of data.
+
+--- 10.10.10.22 ping statistics ---
+30 packets transmitted, 30 received, 0% packet loss, time 5906ms
+rtt min/avg/max/mdev = 0.117/0.145/0.256/0.031 ms
+iperf3 server started on TCP 5202
+host=rpi-syw3480 time=2026-11-26T14:37:55+09:00
+eth0             UP             10.10.10.22/24 
+eth0 speed=1000 Mbps duplex=full mtu=1500
+10.10.10.10 from 10.10.10.22 dev eth0 uid 1000 
+    cache 
+iperf 3.18 (cJSON 1.7.15)
+Linux rpi-syw3480 6.18.50+rpt-rpi-v8 #1 SMP PREEMPT Debian 1:6.18.50-1+rpt1 (2026-09-11) aarch64
+Optional features available: CPU affinity setting, IPv6 flow label, SCTP, TCP congestion algorithm setting, sendfile / zerocopy, socket pacing, authentication, bind to device, support IPv4 don't fragment, POSIX threads
+--- ping 10.10.10.22 to 10.10.10.10 ---
+PING 10.10.10.10 (10.10.10.10) from 10.10.10.22 : 56(84) bytes of data.
+
+--- 10.10.10.10 ping statistics ---
+30 packets transmitted, 30 received, 0% packet loss, time 5918ms
+rtt min/avg/max/mdev = 0.111/0.143/0.256/0.032 ms
+--- tcp 22-to-10 1 ---
+Connecting to host 10.10.10.10, port 5202
+[  5] local 10.10.10.22 port 39741 connected to 10.10.10.10 port 5202
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.00   sec   114 MBytes   953 Mbits/sec    0    389 KBytes       (omitted)
+[  5]   1.00-2.00   sec   111 MBytes   934 Mbits/sec    0    389 KBytes       (omitted)
+[  5]   0.00-1.00   sec   113 MBytes   944 Mbits/sec    0    389 KBytes       
+[  5]   1.00-2.00   sec   112 MBytes   935 Mbits/sec    0    389 KBytes       
+[  5]   2.00-3.00   sec   112 MBytes   942 Mbits/sec    0    389 KBytes       
+[  5]   3.00-4.00   sec   113 MBytes   947 Mbits/sec    0    389 KBytes       
+[  5]   4.00-5.00   sec   112 MBytes   943 Mbits/sec    0    389 KBytes       
+[  5]   5.00-6.00   sec   111 MBytes   934 Mbits/sec    0    389 KBytes       
+[  5]   6.00-7.00   sec   112 MBytes   943 Mbits/sec    0    389 KBytes       
+[  5]   7.00-8.00   sec   112 MBytes   942 Mbits/sec    0    389 KBytes       
+[  5]   8.00-9.00   sec   112 MBytes   944 Mbits/sec    0    389 KBytes       
+[  5]   9.00-10.00  sec   112 MBytes   942 Mbits/sec    0    389 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.10 GBytes   942 Mbits/sec    0            sender
+[  5]   0.00-10.00  sec  1.10 GBytes   941 Mbits/sec                  receiver
+
+iperf Done.
+--- tcp 10-to-22 1 ---
+Connecting to host 10.10.10.10, port 5202
+Reverse mode, remote host 10.10.10.10 is sending
+[  5] local 10.10.10.22 port 49289 connected to 10.10.10.10 port 5202
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec   112 MBytes   940 Mbits/sec                  (omitted)
+[  5]   1.00-2.00   sec   112 MBytes   941 Mbits/sec                  (omitted)
+[  5]   0.00-1.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   1.00-2.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   2.00-3.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   3.00-4.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   4.00-5.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   5.00-6.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   6.00-7.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   7.00-8.00   sec   112 MBytes   941 Mbits/sec                  
+[  5]   8.00-9.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   9.00-10.00  sec   112 MBytes   942 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.10 GBytes   942 Mbits/sec    0            sender
+[  5]   0.00-10.00  sec  1.10 GBytes   942 Mbits/sec                  receiver
+
+iperf Done.
+--- tcp 22-to-10 2 ---
+Connecting to host 10.10.10.10, port 5202
+[  5] local 10.10.10.22 port 36075 connected to 10.10.10.10 port 5202
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.00   sec   114 MBytes   955 Mbits/sec    0    328 KBytes       (omitted)
+[  5]   1.00-2.00   sec   112 MBytes   942 Mbits/sec    0    328 KBytes       (omitted)
+[  5]   0.00-1.00   sec   112 MBytes   942 Mbits/sec    0    328 KBytes       
+[  5]   1.00-2.00   sec   112 MBytes   941 Mbits/sec    0    328 KBytes       
+[  5]   2.00-3.00   sec   112 MBytes   938 Mbits/sec    0    328 KBytes       
+[  5]   3.00-4.00   sec   112 MBytes   943 Mbits/sec    0    328 KBytes       
+[  5]   4.00-5.00   sec   112 MBytes   940 Mbits/sec    0    328 KBytes       
+[  5]   5.00-6.00   sec   112 MBytes   937 Mbits/sec    0    328 KBytes       
+[  5]   6.00-7.00   sec   112 MBytes   942 Mbits/sec    0    328 KBytes       
+[  5]   7.00-8.00   sec   112 MBytes   944 Mbits/sec    0    328 KBytes       
+[  5]   8.00-9.00   sec   112 MBytes   941 Mbits/sec    0    328 KBytes       
+[  5]   9.00-10.00  sec   112 MBytes   942 Mbits/sec    0    328 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.10 GBytes   941 Mbits/sec    0            sender
+[  5]   0.00-10.00  sec  1.10 GBytes   941 Mbits/sec                  receiver
+
+iperf Done.
+--- tcp 10-to-22 2 ---
+Connecting to host 10.10.10.10, port 5202
+Reverse mode, remote host 10.10.10.10 is sending
+[  5] local 10.10.10.22 port 43535 connected to 10.10.10.10 port 5202
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec   112 MBytes   940 Mbits/sec                  (omitted)
+[  5]   1.00-2.00   sec   112 MBytes   942 Mbits/sec                  (omitted)
+[  5]   0.00-1.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   1.00-2.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   2.00-3.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   3.00-4.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   4.00-5.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   5.00-6.00   sec   112 MBytes   941 Mbits/sec                  
+[  5]   6.00-7.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   7.00-8.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   8.00-9.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   9.00-10.00  sec   112 MBytes   942 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.10 GBytes   941 Mbits/sec    0            sender
+[  5]   0.00-10.00  sec  1.10 GBytes   942 Mbits/sec                  receiver
+
+iperf Done.
+--- tcp 22-to-10 3 ---
+Connecting to host 10.10.10.10, port 5202
+[  5] local 10.10.10.22 port 40233 connected to 10.10.10.10 port 5202
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.00   sec   114 MBytes   956 Mbits/sec    0    328 KBytes       (omitted)
+[  5]   1.00-2.00   sec   112 MBytes   938 Mbits/sec    0    328 KBytes       (omitted)
+[  5]   0.00-1.00   sec   112 MBytes   942 Mbits/sec    0    328 KBytes       
+[  5]   1.00-2.00   sec   112 MBytes   941 Mbits/sec    0    328 KBytes       
+[  5]   2.00-3.00   sec   112 MBytes   942 Mbits/sec    0    328 KBytes       
+[  5]   3.00-4.00   sec   112 MBytes   936 Mbits/sec    0    328 KBytes       
+[  5]   4.00-5.00   sec   112 MBytes   942 Mbits/sec    0    328 KBytes       
+[  5]   5.00-6.00   sec   113 MBytes   945 Mbits/sec    0    328 KBytes       
+[  5]   6.00-7.00   sec   112 MBytes   942 Mbits/sec    0    328 KBytes       
+[  5]   7.00-8.00   sec   112 MBytes   941 Mbits/sec    0    328 KBytes       
+[  5]   8.00-9.00   sec   112 MBytes   943 Mbits/sec    0    328 KBytes       
+[  5]   9.00-10.00  sec   112 MBytes   936 Mbits/sec    0    328 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.10 GBytes   941 Mbits/sec    0            sender
+[  5]   0.00-10.00  sec  1.10 GBytes   941 Mbits/sec                  receiver
+
+iperf Done.
+--- tcp 10-to-22 3 ---
+Connecting to host 10.10.10.10, port 5202
+Reverse mode, remote host 10.10.10.10 is sending
+[  5] local 10.10.10.22 port 57363 connected to 10.10.10.10 port 5202
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec   112 MBytes   940 Mbits/sec                  (omitted)
+[  5]   1.00-2.00   sec   112 MBytes   942 Mbits/sec                  (omitted)
+[  5]   0.00-1.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   1.00-2.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   2.00-3.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   3.00-4.00   sec   112 MBytes   941 Mbits/sec                  
+[  5]   4.00-5.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   5.00-6.00   sec   112 MBytes   941 Mbits/sec                  
+[  5]   6.00-7.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   7.00-8.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   8.00-9.00   sec   112 MBytes   942 Mbits/sec                  
+[  5]   9.00-10.00  sec   112 MBytes   942 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.10 GBytes   942 Mbits/sec    0            sender
+[  5]   0.00-10.00  sec  1.10 GBytes   942 Mbits/sec                  receiver
+
+iperf Done.
+--- tcp simultaneous 1 ---
+Connecting to host 10.10.10.10, port 5202
+[  5] local 10.10.10.22 port 37585 connected to 10.10.10.10 port 5202
+[  7] local 10.10.10.22 port 59711 connected to 10.10.10.10 port 5202
+[ ID][Role] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5][TX-C]   0.00-1.00   sec   113 MBytes   948 Mbits/sec    0    396 KBytes       (omitted)
+[  7][RX-C]   0.00-1.00   sec   112 MBytes   940 Mbits/sec                  (omitted)
+[  5][TX-C]   1.00-2.00   sec   112 MBytes   943 Mbits/sec    0    455 KBytes       (omitted)
+[  7][RX-C]   1.00-2.00   sec   112 MBytes   937 Mbits/sec                  (omitted)
+[  5][TX-C]   0.00-1.00   sec   111 MBytes   932 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   0.00-1.00   sec   112 MBytes   940 Mbits/sec                  
+[  5][TX-C]   1.00-2.00   sec   112 MBytes   943 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   1.00-2.00   sec   112 MBytes   939 Mbits/sec                  
+[  5][TX-C]   2.00-3.00   sec   112 MBytes   940 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   2.00-3.00   sec   112 MBytes   940 Mbits/sec                  
+[  5][TX-C]   3.00-4.00   sec   112 MBytes   938 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   3.00-4.00   sec   112 MBytes   941 Mbits/sec                  
+[  5][TX-C]   4.00-5.00   sec   112 MBytes   940 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   4.00-5.00   sec   112 MBytes   938 Mbits/sec                  
+[  5][TX-C]   5.00-6.00   sec   112 MBytes   940 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   5.00-6.00   sec   112 MBytes   938 Mbits/sec                  
+[  5][TX-C]   6.00-7.00   sec   112 MBytes   938 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   6.00-7.00   sec   112 MBytes   941 Mbits/sec                  
+[  5][TX-C]   7.00-8.00   sec   112 MBytes   940 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   7.00-8.00   sec   112 MBytes   940 Mbits/sec                  
+[  5][TX-C]   8.00-9.00   sec   112 MBytes   938 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   8.00-9.00   sec   112 MBytes   940 Mbits/sec                  
+[  5][TX-C]   9.00-10.00  sec   112 MBytes   935 Mbits/sec    0    455 KBytes       
+[  7][RX-C]   9.00-10.00  sec   112 MBytes   938 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID][Role] Interval           Transfer     Bitrate         Retr
+[  5][TX-C]   0.00-10.00  sec  1.09 GBytes   939 Mbits/sec    0            sender
+[  5][TX-C]   0.00-10.00  sec  1.09 GBytes   939 Mbits/sec                  receiver
+[  7][RX-C]   0.00-10.00  sec  1.09 GBytes   940 Mbits/sec    0            sender
+[  7][RX-C]   0.00-10.00  sec  1.09 GBytes   939 Mbits/sec                  receiver
+
+iperf Done.

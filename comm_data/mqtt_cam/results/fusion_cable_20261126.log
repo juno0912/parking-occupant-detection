@@ -1,0 +1,11 @@
+[fusion] 브라우저로 보기: http://<이 Pi IP>:8080
+[fusion] 소스 fake / 640x480 @ 10fps / 결과 /home/linux/fusion_out/latest.jpg  (Ctrl+C 로 종료)
+[fusion] 브로커 연결됨, cam/ir 구독
+[fusion] RGB 10.1 fps | IR 수신 1.8 fps | 짝 성공 16% | 평균 |dt| 27 ms | IR 도착 지연 14 ms
+[fusion] RGB 10.0 fps | IR 수신 10.0 fps | 짝 성공 100% | 평균 |dt| 29 ms | IR 도착 지연 10 ms
+[fusion] RGB 10.0 fps | IR 수신 10.0 fps | 짝 성공 100% | 평균 |dt| 31 ms | IR 도착 지연 18 ms
+[fusion] RGB 10.0 fps | IR 수신 10.0 fps | 짝 성공 100% | 평균 |dt| 31 ms | IR 도착 지연 19 ms
+[fusion] RGB 9.4 fps | IR 수신 10.0 fps | 짝 성공 100% | 평균 |dt| 30 ms | IR 도착 지연 19 ms
+[fusion] RGB 10.0 fps | IR 수신 10.0 fps | 짝 성공 100% | 평균 |dt| 29 ms | IR 도착 지연 19 ms
+[fusion] RGB 10.0 fps | IR 수신 9.0 fps | 짝 성공 92% | 평균 |dt| 31 ms | IR 도착 지연 19 ms
+[fusion] 종료
